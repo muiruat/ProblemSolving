@@ -47,18 +47,12 @@ int main(void)
         }
 
         bool check = true;
+        bool reverse = false;
         for (char c : p)
         {
             if (c == 'R')
             {
-                deque<int> temp;
-                int m = d.size();
-                for (int i = 0; i < m; i++)
-                {
-                    temp.push_front(d.front());
-                    d.pop_front();
-                }
-                d = temp;
+                reverse = !reverse;
             }
             else if (c == 'D')
             {
@@ -69,7 +63,11 @@ int main(void)
                 }
                 else
                 {
-                    d.pop_front();
+                    if (reverse) {
+                        d.pop_back();
+                    } else {
+                        d.pop_front();
+                    }
                 }
             }
         }
@@ -79,10 +77,22 @@ int main(void)
             cout << '[';
             while (!d.empty() && d.size() != 1)
             {
-                cout << d.front() << ',';
-                d.pop_front();
+                if (reverse) {
+                    cout << d.back() << ',';
+                    d.pop_back();
+                } else {
+                    cout << d.front() << ',';
+                    d.pop_front();
+                }
             }
-            cout << d.front() << "]\n";
+            if (d.empty())
+                cout << "]\n";
+            else {
+                if (reverse)
+                    cout << d.back() << "]\n";
+                else
+                    cout << d.front() << "]\n";
+            }
         }
         else
             cout << "error\n";
